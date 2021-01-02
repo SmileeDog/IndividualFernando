@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "438065490690",
+    "project_id": "individual-95104",
+    "storage_bucket": "individual-95104.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438065490690:android:a548e4ac3708588f16701b",
+        "android_client_info": {
+          "package_name": "pe.edu.pucp.tel306.individualfernando"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438065490690-dsho5m4a6po3kkjvd2qeqlk0ek6coufp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.edu.pucp.tel306.individualfernando",
+            "certificate_hash": "0be85300627be89cbcdac4d74f408337cf7f240a"
+          }
+        },
+        {
+          "client_id": "438065490690-20gpopv6trd206t45e4jqk47nbot2hp8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXp_1WArjVNTSEjWBdJ6o_uOvXBA3YmJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438065490690-20gpopv6trd206t45e4jqk47nbot2hp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
