@@ -1,19 +1,10 @@
 package pe.edu.pucp.tel306.individualfernando;
 
-public class Articulo {
-    private String titulo;
+public class Comentario {
     private String cuerpo;
     private String fecha;
     private String autor;
     //----------------------------------------------------------------------------------------------
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public String getCuerpo() {
         return cuerpo;
     }
