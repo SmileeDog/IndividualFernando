@@ -1,14 +1,25 @@
 package pe.edu.pucp.tel306.individualfernando;
 
-public class Articulo {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Articulo implements Serializable {
     private String titulo;
     private String cuerpo;
     private String fecha;
     private String autor;
+
+    private ArrayList<Comentario> comentarioArrayList;
     //----------------------------------------------------------------------------------------------
-    public String getTitulo() {
-        return titulo;
+    public ArrayList<Comentario> getComentarioArrayList() {
+        return comentarioArrayList;
     }
+
+    public void setComentarioArrayList(ArrayList<Comentario> comentarioArrayList) {
+        this.comentarioArrayList = comentarioArrayList;
+    }
+    //----------------------------------------------------------------------------------------------
+    public String getTitulo() { return titulo; }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;

@@ -49,10 +49,9 @@ public class MainActivity3 extends AppCompatActivity {
 
             TextView textView = findViewById(R.id.textView2);
             textView.setText("CRITICO " + displayName);
+
         }
-
         //------------------------------------------------------------------------------------------
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         //listener = new ListenerFB();
         //databaseReference.child("GAAA").addValueEventListener(listener);
@@ -173,10 +172,20 @@ public class MainActivity3 extends AppCompatActivity {
                 });
     }
 
+    /*
     public void mostrarArticulos(View view){
         for (Articulo articulo : articuloArrayList){
             Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
         }
+    }*/
+
+    public void mirarArticulos(View view){
+
+        Intent intent = new Intent(MainActivity3.this, ListarArticulosActivity.class);
+        intent.putExtra("listaArticulos", articuloArrayList);
+        startActivity(intent);
+        finish();
+
     }
 
 
