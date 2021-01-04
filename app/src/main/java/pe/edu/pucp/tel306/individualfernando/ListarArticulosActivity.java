@@ -47,11 +47,13 @@ public class ListarArticulosActivity extends AppCompatActivity {
         Log.d("infoApp", "------------------------------------------------------------------------------------------------------");
         */
 
+
         ListaArticulosAdapter adapter = new ListaArticulosAdapter(articulos,ListarArticulosActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ListarArticulosActivity.this));
     }
+
 
 }

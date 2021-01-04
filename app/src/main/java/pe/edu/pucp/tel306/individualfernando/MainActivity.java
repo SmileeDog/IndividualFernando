@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthMethodPickerLayout;
@@ -16,18 +17,31 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //ArrayList<Articulo> articuloArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //-------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------
+
         ///asdsaad
+        //articuloArrayList = obtenerArticulos();
 
         validacionUsuario();
     }
@@ -67,12 +81,24 @@ public class MainActivity extends AppCompatActivity {
             //SI EL USUARIO ES DIFERENTE DE NULLL, SIGNIFICA QUE SE LOGEO CORRECTAMENTE
             //LO MANDAMOS A LA ACTIVIDAD 2
             if(currentUser.isEmailVerified()){
+
                 if(currentUser.getUid().equals("URwkRvBT7RhAvnexV8yctBOPHIj1")){
+                    Log.d("infoApp"," ERES GESTOR ");
                     startActivity(new Intent(this,MainActivity3.class));
                     finish();
                 }else{
-                    startActivity(new Intent(this,MainActivity2.class));
+                    //obtenerArticulos();
+                    Log.d("infoApp"," ERES COLABORADOR ");
+                    //Log.d("infoApp","LALO : " + articuloArrayList.size());
+
+                    startActivity(new Intent(this,ColaboradorIndicacionesActivity.class));
                     finish();
+
+                    //Intent intent = new Intent(MainActivity.this, ListarArticulosActivity.class);
+                    //intent.putExtra("listaArticulos", articuloArrayList);
+                    //startActivity(intent);
+                    //finish();
+
                 }
                 //startActivity(new Intent(this,MainActivity2.class));
                 //finish();
@@ -89,7 +115,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //ArrayList<Articulo> articuloArrayList = new ArrayList<>();
+    /*
+    public void obtenerArticulos(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("articulos").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue() != null ){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                    //Log.d("infoApp","GAA");
 
+                    articuloArrayList.add(articulo);
+                    Log.d("infoApp","LOOOOONG : " + articuloArrayList.size());
+                }
+            }
 
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue() != null ){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        //------------------
+        Log.d("infoApp","ESTO ES LO QUE MIDE ANTES DE MANDAR : " + articuloArrayList.size());
+        //return articuloArrayList;
+    }*/
 
 }

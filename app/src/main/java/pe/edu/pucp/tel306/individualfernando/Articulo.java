@@ -8,8 +8,14 @@ public class Articulo implements Serializable {
     private String cuerpo;
     private String fecha;
     private String autor;
+    private String pk;
 
     private ArrayList<Comentario> comentarioArrayList;
+    //----------------------------------------------------------------------------------------------
+
+    public String getPk() { return pk; }
+    public void setPk(String pk) { this.pk = pk; }
+
     //----------------------------------------------------------------------------------------------
     public ArrayList<Comentario> getComentarioArrayList() {
         return comentarioArrayList;

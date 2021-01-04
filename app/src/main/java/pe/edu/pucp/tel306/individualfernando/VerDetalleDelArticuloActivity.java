@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,4 +34,12 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
 
 
     }
+
+    public void verComentarios(View view){
+        Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
+        intent.putExtra("arti", articulo);
+        startActivity(intent);
+        finish();
+    }
+
 }

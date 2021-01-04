@@ -45,6 +45,15 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
             }
         });
 
+        /*
+        holder.eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, VerDetalleDelArticuloActivity.class);
+                intent.putExtra("arti", articulo);
+                context.startActivity(intent);
+            }
+        });*/
     }
 
     @Override
@@ -56,14 +65,15 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
         public TextView textView;
         public Button verDetalle;
 
+        //public Button eliminar;
+
         public ArticuloViewHolder(View itemview){
             super(itemview);
             this.textView = itemview.findViewById(R.id.textView3);
 
-            verDetalle =itemview.findViewById(R.id.button8);
+            verDetalle = itemview.findViewById(R.id.button8);
 
-
-
+            //eliminar = itemview.findViewById(R.id.button14);
         }
     }
 

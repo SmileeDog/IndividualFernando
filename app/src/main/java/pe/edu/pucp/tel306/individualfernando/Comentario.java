@@ -1,6 +1,8 @@
 package pe.edu.pucp.tel306.individualfernando;
 
-public class Comentario {
+import java.io.Serializable;
+
+public class Comentario implements Serializable {
     private String cuerpo;
     private String fecha;
     private String autor;

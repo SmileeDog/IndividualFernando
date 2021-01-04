@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MainActivity3 extends AppCompatActivity {
@@ -36,6 +38,35 @@ public class MainActivity3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("articulos").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue() != null ){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                    Log.d("infoApp","GAA");
+                    articuloArrayList.add(articulo);
+                }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue() != null ){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                }
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -51,76 +82,8 @@ public class MainActivity3 extends AppCompatActivity {
             textView.setText("CRITICO " + displayName);
 
         }
-        //------------------------------------------------------------------------------------------
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        //listener = new ListenerFB();
-        //databaseReference.child("GAAA").addValueEventListener(listener);
-        //------------------------------------------------------------------------------------------
-
-        databaseReference.child("articulos").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.getValue() != null ){
-                    Articulo articulo = snapshot.getValue(Articulo.class);
-                    //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
-                    Log.d("infoApp","GAA");
-
-                    articuloArrayList.add(articulo);
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.getValue() != null ){
-                    Articulo articulo = snapshot.getValue(Articulo.class);
-                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
-                }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        //------------------------------------------------------------------------------------------
-
     }
 
-    //private ListenerFB listener;
-
-    /*
-    class ListenerFB implements ValueEventListener{
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if(snapshot.getValue() != null){
-                Articulo articulo = snapshot.getValue(Articulo.class);
-                Log.d("infoApp","GAAAAAAAAAAAAAA");
-            }
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.removeEventListener(listener);
-    }
-    */
     //----------------------------------------------------------------------------------------------
     public void logout(View view){
         AuthUI instance = AuthUI.getInstance();
@@ -150,17 +113,21 @@ public class MainActivity3 extends AppCompatActivity {
         articulo.setTitulo(titulo.getText().toString());
 
         articulo.setCuerpo(body.getText().toString());
+
         LocalDate localDate = LocalDate.now();
         articulo.setFecha(localDate.toString());
 
-        //LocalDate localDate = LocalDate.;
-        //articulo.setFecha(.toString());
+        String mypk = databaseReference.push().getKey();
+        articulo.setPk(mypk);
+        //Arr
+        //articulo.setComentarioArrayList(new ArrayList<>());
 
-        databaseReference.child("articulos").push().setValue(articulo)
+        databaseReference.child("articulos/"+articulo.getPk()).setValue(articulo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("infoApp","ARTICULO GUARDADO EXITOSAMENTE");
+                        Toast.makeText(MainActivity3.this,"ARTICULO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -172,15 +139,16 @@ public class MainActivity3 extends AppCompatActivity {
                 });
     }
 
-    /*
     public void mostrarArticulos(View view){
         for (Articulo articulo : articuloArrayList){
             Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
         }
-    }*/
+    }
 
     public void mirarArticulos(View view){
 
+        //startActivity(new Intent(MainActivity3.this,ListarArticulosActivity.class));
+        //finish();
         Intent intent = new Intent(MainActivity3.this, ListarArticulosActivity.class);
         intent.putExtra("listaArticulos", articuloArrayList);
         startActivity(intent);
