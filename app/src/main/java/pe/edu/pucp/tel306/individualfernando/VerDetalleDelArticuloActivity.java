@@ -22,7 +22,9 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
 
-        Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+
+        Log.d("infoApp","ESTAMOS EN VER DETALLES DE ARTICULO");
+        Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
 
 
         TextView textView = findViewById(R.id.textView8);
@@ -30,13 +32,10 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
 
         TextView textView1 = findViewById(R.id.textView9);
         textView1.setText(articulo.getCuerpo());
-
-
-
     }
-
     public void verComentarios(View view){
         Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
+        Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
         intent.putExtra("arti", articulo);
         startActivity(intent);
         finish();

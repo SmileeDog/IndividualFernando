@@ -119,8 +119,18 @@ public class MainActivity3 extends AppCompatActivity {
 
         String mypk = databaseReference.push().getKey();
         articulo.setPk(mypk);
-        //Arr
-        //articulo.setComentarioArrayList(new ArrayList<>());
+
+        ArrayList<Comentario> alcom = new ArrayList<>();
+        //----------------------------------------
+        Comentario comentario = new Comentario();
+        comentario.setAutor(currentUser.getUid());
+        //comentario.setFecha(localDate.toString());
+        comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
+//--------------------------------------------------------------------------------------------------
+        alcom.add(comentario);
+        //----------------------------------------
+
+        articulo.setComentarioArrayList(alcom);
 
         databaseReference.child("articulos/"+articulo.getPk()).setValue(articulo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
