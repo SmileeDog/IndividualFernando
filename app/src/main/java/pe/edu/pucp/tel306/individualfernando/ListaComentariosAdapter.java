@@ -35,7 +35,7 @@ public class ListaComentariosAdapter extends RecyclerView.Adapter<ListaComentari
         holder.textView7.setText(autor);
         String fecha = "FECHA : " + comentario.getFecha();
         holder.textView10.setText(fecha);
-        String texto = "TEXTO : " + comentario.getCuerpo();
+        String texto = "COMENTARIO : " + comentario.getCuerpo();
         holder.textView11.setText(texto);
 
     }

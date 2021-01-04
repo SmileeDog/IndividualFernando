@@ -20,11 +20,11 @@ public class VerComentariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_comentarios);
 
-        Log.d("infoApp","ESTAMOS EN LISTA COMENTARIOS");
-        Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
-
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
+
+        Log.d("infoApp","ESTAMOS EN LISTA COMENTARIOS");
+        Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
 
         ArrayList<Comentario> comentarioArrayList = articulo.getComentarioArrayList();
 

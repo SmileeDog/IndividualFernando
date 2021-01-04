@@ -3,12 +3,15 @@ package pe.edu.pucp.tel306.individualfernando;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -79,13 +82,24 @@ public class MainActivity3 extends AppCompatActivity {
             Log.d("infoApp","UID : " + uid + " |  DISPLAY : " + displayName + " | EMAIL : " + email );
 
             TextView textView = findViewById(R.id.textView2);
-            textView.setText("CRITICO " + displayName);
-
+            textView.setText("CREAR TEMA DE DEBATE");
         }
     }
 
     //----------------------------------------------------------------------------------------------
     public void logout(View view){
+        AuthUI instance = AuthUI.getInstance();
+        instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                startActivity(new Intent(MainActivity3.this,MainActivity.class));
+                finish();
+            }
+        });
+
+    }
+
+    public void salir(){
         AuthUI instance = AuthUI.getInstance();
         instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -150,23 +164,46 @@ public class MainActivity3 extends AppCompatActivity {
                 });
     }
 
+    /*
     public void mostrarArticulos(View view){
         for (Articulo articulo : articuloArrayList){
             Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
         }
-    }
+    }*/
 
     public void mirarArticulos(View view){
-
         //startActivity(new Intent(MainActivity3.this,ListarArticulosActivity.class));
         //finish();
         Intent intent = new Intent(MainActivity3.this, ListarArticulosActivity.class);
         intent.putExtra("listaArticulos", articuloArrayList);
         startActivity(intent);
         finish();
-
     }
 
-
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==event.KEYCODE_BACK){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity3.this);
+            builder.setMessage("EN SERIO DESEAS IRTE?")
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            /*
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            */
+                            salir();
+                        }
+                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //gaaaaaaa
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
