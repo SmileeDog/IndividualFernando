@@ -73,6 +73,7 @@ public class FormularioComentarioActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void guardarComentario(View view){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -97,7 +98,9 @@ public class FormularioComentarioActivity extends AppCompatActivity {
         Comentario comentario = new Comentario();
         EditText comentarioTexto = findViewById(R.id.editTextTextMultiLine3);
         comentario.setAutor(currentUser.getUid());
-        //comentario.setFecha(localDate.toString());
+
+        LocalDate localDate = LocalDate.now();
+        comentario.setFecha(localDate.toString());
         comentario.setCuerpo(comentarioTexto.getText().toString());
 //--------------------------------------------------------------------------------------------------
         Log.d("infoApp","COMENT : " + comentario.getCuerpo());

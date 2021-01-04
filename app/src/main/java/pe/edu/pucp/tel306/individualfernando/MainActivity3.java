@@ -124,7 +124,8 @@ public class MainActivity3 extends AppCompatActivity {
         //----------------------------------------
         Comentario comentario = new Comentario();
         comentario.setAutor(currentUser.getUid());
-        //comentario.setFecha(localDate.toString());
+        comentario.setFecha(localDate.toString());
+
         comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
 //--------------------------------------------------------------------------------------------------
         alcom.add(comentario);

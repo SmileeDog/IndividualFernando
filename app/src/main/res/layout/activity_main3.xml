@@ -25,7 +25,7 @@
         android:layout_width="94dp"
         android:layout_height="38dp"
         android:onClick="logout"
-        android:text="Exit"
+        android:text="Cerrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.049"
@@ -109,7 +109,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:onClick="mirarArticulos"
-        android:text="Button"
+        android:text="Ver Articulos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
