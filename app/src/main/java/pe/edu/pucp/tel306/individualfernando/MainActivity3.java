@@ -208,7 +208,7 @@ public class MainActivity3 extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Log.d("infoApp","ARTICULO GUARDADO EXITOSAMENTE");
-                                Toast.makeText(MainActivity3.this,"ARTICULO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity3.this,"DEBATE INICIADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

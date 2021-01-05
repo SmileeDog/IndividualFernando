@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +32,14 @@ public class ColaboradorIndicacionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colaborador_indicaciones);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+        String bienvenida = "Bienvenido a \"La Encerrona\"\nEsta es una aplicación que fomenta el debate y rinde homenaje a la libertad de expresion y pensamiento.\n" +
+                "En esta app usted encontrará dstintos temas de debate y podrá comentar todos y cada uno de ellos.\n    1)   Si selecciona un tema de debate podrá visualizar una breve descripción del tema a debatir\n"+
+                "   2)   Entonces podrá acceder a la lista de comentarios del tema en cuestión\n   3)   Posteriormente será capaz de agregar una opinión del tema seleccionado\n\n    GO!!!";
+
+        TextView textViewGps = findViewById(R.id.textView15);
+        textViewGps.setText(bienvenida);
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
