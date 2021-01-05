@@ -37,6 +37,9 @@ public class MainActivity3 extends AppCompatActivity {
 
     ArrayList<Articulo> articuloArrayList = new ArrayList<>();
 
+    EditText descripcion;
+    EditText titulo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +85,13 @@ public class MainActivity3 extends AppCompatActivity {
             Log.d("infoApp","UID : " + uid + " |  DISPLAY : " + displayName + " | EMAIL : " + email );
 
             TextView textView = findViewById(R.id.textView2);
-            textView.setText("CREAR TEMA DE DEBATE");
+            textView.setText("INICIAR DEBATE");
         }
+
+        //----------------------------------
+        descripcion = findViewById(R.id.editTextTextMultiLine);
+        titulo = findViewById(R.id.editTextTextMultiLine2);
+        //-----------------------------------
     }
 
     //----------------------------------------------------------------------------------------------
@@ -111,57 +119,84 @@ public class MainActivity3 extends AppCompatActivity {
 
     }
 
+    private void limpiarCajas() {
+        descripcion.setText("");
+        titulo.setText("");
+    }
+
+    private void validacion() {
+        String des = descripcion.getText().toString().trim();
+        String tit = titulo.getText().toString().trim();
+        if (tit.equals("")){
+            descripcion.setError("EL TITULO NO PUEDE QUEDAR VACIO");
+        }else if (des.equals("")){
+            descripcion.setError("LA DESCRIPCION NO PUEDE QUEDAR VACIA");
+        }
+
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void guardarArticulo(View view){
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        Articulo articulo = new Articulo();
+        String tit = titulo.getText().toString().trim();
+        String des = descripcion.getText().toString().trim();
+
+        if(des.equals("") || tit.equals("")){
+            validacion();
+        }else{
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            Articulo articulo = new Articulo();
 
 
-        EditText titulo = findViewById(R.id.editTextTextMultiLine2);
-        EditText body = findViewById(R.id.editTextTextMultiLine);
+            //EditText titulo = findViewById(R.id.editTextTextMultiLine2);
+            //EditText body = findViewById(R.id.editTextTextMultiLine);
 
-        articulo.setAutor(currentUser.getUid());
+            articulo.setAutor(currentUser.getUid());
 
-        articulo.setTitulo(titulo.getText().toString());
+            articulo.setTitulo(tit);
 
-        articulo.setCuerpo(body.getText().toString());
+            articulo.setCuerpo(des);
 
-        LocalDate localDate = LocalDate.now();
-        articulo.setFecha(localDate.toString());
+            LocalDate localDate = LocalDate.now();
+            articulo.setFecha(localDate.toString());
 
-        String mypk = databaseReference.push().getKey();
-        articulo.setPk(mypk);
+            String mypk = databaseReference.push().getKey();
+            articulo.setPk(mypk);
 
-        ArrayList<Comentario> alcom = new ArrayList<>();
-        //----------------------------------------
-        Comentario comentario = new Comentario();
-        comentario.setAutor(currentUser.getUid());
-        comentario.setFecha(localDate.toString());
+            ArrayList<Comentario> alcom = new ArrayList<>();
+            //----------------------------------------
+            Comentario comentario = new Comentario();
+            comentario.setAutor(currentUser.getUid());
+            comentario.setFecha(localDate.toString());
 
-        comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
+            comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
 //--------------------------------------------------------------------------------------------------
-        alcom.add(comentario);
-        //----------------------------------------
+            alcom.add(comentario);
+            //----------------------------------------
 
-        articulo.setComentarioArrayList(alcom);
+            articulo.setComentarioArrayList(alcom);
 
-        databaseReference.child("articulos/"+articulo.getPk()).setValue(articulo)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("infoApp","ARTICULO GUARDADO EXITOSAMENTE");
-                        Toast.makeText(MainActivity3.this,"ARTICULO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
-                        Log.d("infoApp","NO C PUDO GUARDAR");
-                    }
-                });
+            databaseReference.child("articulos/"+articulo.getPk()).setValue(articulo)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("infoApp","ARTICULO GUARDADO EXITOSAMENTE");
+                            Toast.makeText(MainActivity3.this,"ARTICULO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            e.printStackTrace();
+                            Log.d("infoApp","NO C PUDO GUARDAR");
+                        }
+                    });
+
+            limpiarCajas();
+        }
     }
 
     /*

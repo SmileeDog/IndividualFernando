@@ -34,7 +34,7 @@
         android:id="@+id/button13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="44dp"
         android:onClick="irAComentarios"
         android:text="Comentarios"
@@ -45,10 +45,11 @@
         android:id="@+id/button16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="60dp"
         android:onClick="salir"
-        android:text="Cerrar"
-        app:layout_constraintBottom_toBottomOf="@+id/button13"
+        android:text="cerrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button13" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

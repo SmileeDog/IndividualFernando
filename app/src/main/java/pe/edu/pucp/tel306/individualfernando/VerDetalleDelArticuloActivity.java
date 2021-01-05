@@ -1,5 +1,7 @@
 package pe.edu.pucp.tel306.individualfernando;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,11 +10,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class VerDetalleDelArticuloActivity extends AppCompatActivity {
 
     Articulo articulo = new Articulo();
+
+    ArrayList<Articulo> articuloArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,38 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
 
         TextView textView1 = findViewById(R.id.textView9);
         textView1.setText(articulo.getCuerpo());
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("articulos").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue() != null ){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                    Log.d("infoApp","GAA");
+                    articuloArrayList.add(articulo);
+                }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue() != null ){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                }
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     }
     public void verComentarios(View view){
         Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
@@ -40,5 +82,13 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void volverAListaDebates(View view){
+        Intent intent = new Intent(VerDetalleDelArticuloActivity.this, ListarArticulosActivity.class);
+        intent.putExtra("listaArticulos", articuloArrayList);
+        startActivity(intent);
+        finish();
+    }
+
 
 }

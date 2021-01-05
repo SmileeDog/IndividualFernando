@@ -8,12 +8,12 @@
 
     <ScrollView
         android:layout_width="349dp"
-        android:layout_height="460dp"
+        android:layout_height="358dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568">
+        app:layout_constraintVertical_bias="0.678">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,13 +30,14 @@
     </ScrollView>
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="349dp"
         android:layout_height="91dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintVertical_bias="0.215">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="18sp"
+                android:textSize="21sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
@@ -63,5 +64,17 @@
         android:text="Comentarios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:onClick="volverAListaDebates"
+        android:text="Volver"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.488" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

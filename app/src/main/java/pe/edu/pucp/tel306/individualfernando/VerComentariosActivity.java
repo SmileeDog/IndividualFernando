@@ -1,5 +1,6 @@
 package pe.edu.pucp.tel306.individualfernando;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,11 +10,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class VerComentariosActivity extends AppCompatActivity {
 
     Articulo articulo = new Articulo();
+
+    Articulo artiEscuchado = new Articulo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,21 @@ public class VerComentariosActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(VerComentariosActivity.this));
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("articulos").child(articulo.getPk()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue() != null){
+                    //Articulo articulo = snapshot.getValue(Articulo.class);
+                    artiEscuchado = snapshot.getValue(Articulo.class);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
     }
@@ -60,4 +84,22 @@ public class VerComentariosActivity extends AppCompatActivity {
         finish();
 
     }
+
+    public void irADetalleDebate(View view){
+
+        Intent intent = new Intent(VerComentariosActivity.this, VerDetalleDelArticuloActivity.class);
+        intent.putExtra("arti", artiEscuchado);
+        startActivity(intent);
+        finish();
+
+    }
+
+    public void refre(View view){
+        Intent intent = new Intent(VerComentariosActivity.this, VerComentariosActivity.class);
+        intent.putExtra("arti", artiEscuchado);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

@@ -83,15 +83,13 @@ public class FormularioComentarioActivity extends AppCompatActivity {
 
     private void limpiarCajas() {
         comentarioTexto.setText("");
-
     }
 
     private void validacion() {
-        String come = comentarioTexto.getText().toString();
+        String come = comentarioTexto.getText().toString().trim();
         if (come.equals("")){
             comentarioTexto.setError("EL COMENTARIO NO PUEDE QUEDAR VACIO");
         };
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -129,7 +127,7 @@ public class FormularioComentarioActivity extends AppCompatActivity {
 
             LocalDate localDate = LocalDate.now();
             comentario.setFecha(localDate.toString());
-            comentario.setCuerpo(comentarioTexto.getText().toString());
+            comentario.setCuerpo(come);
 //--------------------------------------------------------------------------------------------------
             Log.d("infoApp", "COMENT : " + comentario.getCuerpo());
 
@@ -170,12 +168,10 @@ public class FormularioComentarioActivity extends AppCompatActivity {
     }
 
     public void irAComentarios(View view){
-
         Intent intent = new Intent(FormularioComentarioActivity.this, VerComentariosActivity.class);
         intent.putExtra("arti", artiEscuchado);
         startActivity(intent);
         finish();
-
     }
 
     public void salir(View view){
