@@ -83,7 +83,7 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(currentUser.getUid().equals("URwkRvBT7RhAvnexV8yctBOPHIj1")){
-            Intent intent = new Intent(VerDetalleDelArticuloActivity.this, ListaComentariosGestorActivity.class);
+            Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
             Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
             intent.putExtra("arti", articulo);
             startActivity(intent);
