@@ -6,6 +6,11 @@ public class Comentario implements Serializable {
     private String cuerpo;
     private String fecha;
     private String autor;
+    private String direccion;
+
+    //----------------------------------------------------------------------------------------------
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
     //----------------------------------------------------------------------------------------------
     public String getCuerpo() {
         return cuerpo;

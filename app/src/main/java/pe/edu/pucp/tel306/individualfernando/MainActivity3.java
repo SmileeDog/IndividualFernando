@@ -196,6 +196,7 @@ public class MainActivity3 extends AppCompatActivity {
                 comentario.setFecha(localDate.toString());
 
                 comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
+                comentario.setDireccion(dir);
 //--------------------------------------------------------------------------------------------------
                 alcom.add(comentario);
                 //----------------------------------------
@@ -322,7 +323,7 @@ public class MainActivity3 extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         } else {
-            Toast.makeText(MainActivity3.this, "Por favor active su GPS", Toast.LENGTH_SHORT).show(); //FORMATO DE UN TOAST QUE ES COMO UN POP UP
+            Toast.makeText(MainActivity3.this, "Por favor active su GPS y espere unos segundos", Toast.LENGTH_SHORT).show(); //FORMATO DE UN TOAST QUE ES COMO UN POP UP
         }
     }
 }

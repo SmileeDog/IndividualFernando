@@ -6,6 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".FormularioComentarioActivity">
 
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripcion :"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.163"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.178" />
+
+    <TextView
+        android:id="@+id/textViewGps2"
+        android:layout_width="373dp"
+        android:layout_height="18dp"
+        android:layout_marginBottom="120dp"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="ubicacion" />
+
     <EditText
         android:id="@+id/editTextTextMultiLine3"
         android:layout_width="311dp"
@@ -23,11 +48,12 @@
         android:id="@+id/button12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="48dp"
         android:onClick="guardarComentario"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.837"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -51,5 +77,17 @@
         android:text="cerrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obtener Ubicacion"
+        app:layout_constraintBottom_toBottomOf="@+id/button12"
+        app:layout_constraintEnd_toStartOf="@+id/button12"
+        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button12"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,18 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,8 +38,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class FormularioComentarioActivity extends AppCompatActivity {
 
@@ -36,6 +50,8 @@ public class FormularioComentarioActivity extends AppCompatActivity {
     Articulo artiEscuchado = new Articulo();
 
     EditText comentarioTexto;
+
+    String dir = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,80 +118,82 @@ public class FormularioComentarioActivity extends AppCompatActivity {
         if (come.equals("")) {
             validacion();
         } else {
-            //guardarComentario();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if(dir.equals("")){
+                Toast.makeText(FormularioComentarioActivity.this, "POR FAVOR OBTENGA SU UBICACION", Toast.LENGTH_SHORT).show();
+            }else {
+                //guardarComentario();
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 //--------------------------------------------------------------------------------------------------
-            Intent intent = getIntent();
-            articulo = (Articulo) intent.getSerializableExtra("arti");
-            Log.d("infoApp", "ESTE ES EL ARTICULO Q ME LLEGA : " + articulo.getPk());
+                Intent intent = getIntent();
+                articulo = (Articulo) intent.getSerializableExtra("arti");
+                Log.d("infoApp", "ESTE ES EL ARTICULO Q ME LLEGA : " + articulo.getPk());
 
 //--------------------------------------------------------------------------------------------------
-            ArrayList<Comentario> comeAL = new ArrayList<>();
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //Log.d("infoApp","CUANTO T MIDE : " + articulo.getComentarioArrayList().size());
-            comeAL = articulo.getComentarioArrayList();
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ArrayList<Comentario> comeAL = new ArrayList<>();
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //Log.d("infoApp","CUANTO T MIDE : " + articulo.getComentarioArrayList().size());
+                comeAL = articulo.getComentarioArrayList();
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /*
         if(articulo.getComentarioArrayList().size()!=0){
             comeAL = articulo.getComentarioArrayList();
         }*/
 //--------------------------------------------------------------------------------------------------
-            Comentario comentario = new Comentario();
+                Comentario comentario = new Comentario();
 
+                comentario.setAutor(currentUser.getUid());
 
-            comentario.setAutor(currentUser.getUid());
-
-            LocalDate localDate = LocalDate.now();
-            comentario.setFecha(localDate.toString());
-            comentario.setCuerpo(come);
+                LocalDate localDate = LocalDate.now();
+                comentario.setFecha(localDate.toString());
+                comentario.setCuerpo(come);
+                comentario.setDireccion(dir);
 //--------------------------------------------------------------------------------------------------
-            Log.d("infoApp", "COMENT : " + comentario.getCuerpo());
+                Log.d("infoApp", "COMENT : " + comentario.getCuerpo());
 
-            comeAL.add(comentario);
+                comeAL.add(comentario);
 
-            articulo.setComentarioArrayList(comeAL);
+                articulo.setComentarioArrayList(comeAL);
 
-            //Articulo finalArticulo = articulo;
-            databaseReference.child("articulos/" + articulo.getPk()).setValue(articulo)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
+                //Articulo finalArticulo = articulo;
+                databaseReference.child("articulos/" + articulo.getPk()).setValue(articulo)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
 
-                            Toast.makeText(FormularioComentarioActivity.this, "COMENTARIO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FormularioComentarioActivity.this, "COMENTARIO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
 
-                            Log.d("infoApp", "COMENTARIO GUARDADO EXITOSAMENTE");
-                            Log.d("infoApp", "TENEMOS ESTO");
+                                Log.d("infoApp", "COMENTARIO GUARDADO EXITOSAMENTE");
+                                Log.d("infoApp", "TENEMOS ESTO");
                         /*
                         for(Comentario c : finalArticulo.getComentarioArrayList()){
                             Log.d("infoApp","COMEEE : " + c.getCuerpo());
                         }
                         */
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            e.printStackTrace();
-                            Log.d("infoApp", "NO C PUDO GUARDAR");
-                        }
-                    });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                                Log.d("infoApp", "NO C PUDO GUARDAR");
+                            }
+                        });
 
-            //
-            limpiarCajas();
-            //return true;
-        }
+                //
+                limpiarCajas();
+                //return true;
+            }
+            }
 
     }
-
     public void irAComentarios(View view){
         Intent intent = new Intent(FormularioComentarioActivity.this, VerComentariosActivity.class);
         intent.putExtra("arti", artiEscuchado);
         startActivity(intent);
         finish();
     }
-
     public void salir(View view){
         AuthUI instance = AuthUI.getInstance();
         instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -185,6 +203,54 @@ public class FormularioComentarioActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private boolean gpsActivo() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean providerEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return providerEnabled;
+    }
+
+    public void mostrarInfoDeUbicacion(View view) {
+        if (gpsActivo()) {
+            int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                FusedLocationProviderClient location = LocationServices.getFusedLocationProviderClient(this);
+                location.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        //if(location.getAltitude() || location)
+                        //Log.d("infoApp", "ALt" + location.getAltitude());
+                        //Log.d("infoApp", "Lat" + location.getLatitude());
+                        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                        try {
+                            List<Address> direccion = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            //Log.d("infoApp", "la direccion es:" + direccion.get(0).getAddressLine(0));
+
+                            dir=direccion.get(0).getAddressLine(0);
+
+                            TextView textViewGps = findViewById(R.id.textViewGps2);
+                            textViewGps.setText(direccion.get(0).getAddressLine(0));
+                            textViewGps.setVisibility(View.VISIBLE);
+                            //deviceUser.setLatitud(location.getLatitude());
+                            //deviceUser.setLongitud(location.getLongitude());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                location.getLastLocation().addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Log.d("infoApp", "Fallo aquí GA");
+                    }
+                });
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        } else {
+            Toast.makeText(FormularioComentarioActivity.this, "Por favor active su GPS y espere unos segundos", Toast.LENGTH_SHORT).show(); //FORMATO DE UN TOAST QUE ES COMO UN POP UP
+        }
     }
 
 

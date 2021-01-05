@@ -31,11 +31,11 @@ public class ListaComentariosAdapter extends RecyclerView.Adapter<ListaComentari
     @Override
     public void onBindViewHolder(ComentarioViewHolder holder, int position) {
         Comentario comentario = listaComentarios[position];
-        String autor = "AUTOR : " + comentario.getAutor();
+        String autor = "    COMENTADO POR : " + comentario.getAutor() + "\n DESDE " + comentario.getDireccion();
         holder.textView7.setText(autor);
-        String fecha = "FECHA : " + comentario.getFecha();
+        String fecha = "    FECHA : " + comentario.getFecha();
         holder.textView10.setText(fecha);
-        String texto = "COMENTARIO : " + comentario.getCuerpo();
+        String texto = "    OPINION : " + comentario.getCuerpo();
         holder.textView11.setText(texto);
 
     }
