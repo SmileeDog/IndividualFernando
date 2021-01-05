@@ -42,6 +42,8 @@ public class FormularioComentarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_comentario);
 
+        Log.d("infoApp","ESTAMOS EN EL FORMULARIO DE COMENTARIO DEL COLABORADOR");
+
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
 

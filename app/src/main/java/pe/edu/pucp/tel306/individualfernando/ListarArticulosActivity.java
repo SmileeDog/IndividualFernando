@@ -35,12 +35,14 @@ public class ListarArticulosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_articulos);
 
+        Log.d("infoApp","ESTAMOS EN LISTA DEBATES DEL TODOS");
+
         Intent intent =  getIntent();
         articuloArrayList = (ArrayList<Articulo>) intent.getSerializableExtra("listaArticulos");
 
-        Log.d("infoApp","SIZE : " + articuloArrayList.size());
+        //Log.d("infoApp","SIZE : " + articuloArrayList.size());
         Articulo [] articulos = new Articulo[articuloArrayList.size()];
-        Log.d("infoApp","LENGTH : "+ articulos.length);
+        //Log.d("infoApp","LENGTH : "+ articulos.length);
         for(int i = 1; i<= articuloArrayList.size();i++){
             articulos[i-1]=articuloArrayList.get(i-1);
         }
@@ -59,7 +61,7 @@ public class ListarArticulosActivity extends AppCompatActivity {
                 if(snapshot.getValue() != null ){
                     Articulo articulo = snapshot.getValue(Articulo.class);
                     //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
-                    Log.d("infoApp","GAA");
+                    //Log.d("infoApp","GAA");
                     artiArrayList.add(articulo);
                 }
             }
@@ -67,7 +69,7 @@ public class ListarArticulosActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.getValue() != null ){
                     Articulo articulo = snapshot.getValue(Articulo.class);
-                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                    //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
                 }
             }
             @Override
@@ -115,6 +117,4 @@ public class ListarArticulosActivity extends AppCompatActivity {
         });
 
     }
-
-
 }

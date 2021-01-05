@@ -32,8 +32,8 @@ public class VerComentariosActivity extends AppCompatActivity {
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
 
-        Log.d("infoApp","ESTAMOS EN LISTA COMENTARIOS");
-        Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
+        Log.d("infoApp","ESTAMOS EN LISTA COMENTARIOS DEL COLABORADOR");
+        //Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
 
         ArrayList<Comentario> comentarioArrayList = articulo.getComentarioArrayList();
 

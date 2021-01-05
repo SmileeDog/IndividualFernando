@@ -53,13 +53,17 @@ public class MainActivity3 extends AppCompatActivity {
     EditText descripcion;
     EditText titulo;
 
+    String dir = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
+        Log.d("infoApp","ESTAMOS EN EL FORMULARIO DE DEBATE DEL GESTOR");
+
         TextView textViewGps = findViewById(R.id.textViewGps);
-        Log.d("infoApp","direccion GAAAAAAAAAAAAAA : " + textViewGps.toString());
+        //Log.d("infoApp","direccion GAAAAAAAAAAAAAA : " + textViewGps.toString());
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("articulos").addChildEventListener(new ChildEventListener() {
@@ -68,7 +72,7 @@ public class MainActivity3 extends AppCompatActivity {
                 if(snapshot.getValue() != null ){
                     Articulo articulo = snapshot.getValue(Articulo.class);
                     //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
-                    Log.d("infoApp","GAA");
+                    //Log.d("infoApp","GAA");
                     articuloArrayList.add(articulo);
                 }
             }
@@ -76,7 +80,7 @@ public class MainActivity3 extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.getValue() != null ){
                     Articulo articulo = snapshot.getValue(Articulo.class);
-                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                    //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
                 }
             }
             @Override
@@ -98,7 +102,7 @@ public class MainActivity3 extends AppCompatActivity {
             String displayName = currentUser.getDisplayName();
             String email = currentUser.getEmail();
 
-            Log.d("infoApp","UID : " + uid + " |  DISPLAY : " + displayName + " | EMAIL : " + email );
+            //Log.d("infoApp","UID : " + uid + " |  DISPLAY : " + displayName + " | EMAIL : " + email );
 
             TextView textView = findViewById(R.id.textView2);
             textView.setText("INICIAR DEBATE");
@@ -161,57 +165,61 @@ public class MainActivity3 extends AppCompatActivity {
         if(des.equals("") || tit.equals("")){
             validacion();
         }else{
+            if(dir.equals("")){
+                Toast.makeText(MainActivity3.this, "POR FAVOR OBTENGA SU UBICACION", Toast.LENGTH_SHORT).show();
+            }else{
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                Articulo articulo = new Articulo();
 
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            Articulo articulo = new Articulo();
 
+                //EditText titulo = findViewById(R.id.editTextTextMultiLine2);
+                //EditText body = findViewById(R.id.editTextTextMultiLine);
 
-            //EditText titulo = findViewById(R.id.editTextTextMultiLine2);
-            //EditText body = findViewById(R.id.editTextTextMultiLine);
+                articulo.setAutor(currentUser.getUid());
 
-            articulo.setAutor(currentUser.getUid());
+                articulo.setTitulo(tit);
 
-            articulo.setTitulo(tit);
+                articulo.setCuerpo(des);
 
-            articulo.setCuerpo(des);
+                LocalDate localDate = LocalDate.now();
+                articulo.setFecha(localDate.toString());
 
-            LocalDate localDate = LocalDate.now();
-            articulo.setFecha(localDate.toString());
+                String mypk = databaseReference.push().getKey();
+                articulo.setPk(mypk);
+                articulo.setDireccion(dir);
 
-            String mypk = databaseReference.push().getKey();
-            articulo.setPk(mypk);
+                ArrayList<Comentario> alcom = new ArrayList<>();
+                //----------------------------------------
+                Comentario comentario = new Comentario();
+                comentario.setAutor(currentUser.getUid());
+                comentario.setFecha(localDate.toString());
 
-            ArrayList<Comentario> alcom = new ArrayList<>();
-            //----------------------------------------
-            Comentario comentario = new Comentario();
-            comentario.setAutor(currentUser.getUid());
-            comentario.setFecha(localDate.toString());
-
-            comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
+                comentario.setCuerpo("POR FAVOR, LOS COMENTARIOS DEBEN SER RESPETUOSOS");
 //--------------------------------------------------------------------------------------------------
-            alcom.add(comentario);
-            //----------------------------------------
+                alcom.add(comentario);
+                //----------------------------------------
 
-            articulo.setComentarioArrayList(alcom);
+                articulo.setComentarioArrayList(alcom);
 
-            databaseReference.child("articulos/"+articulo.getPk()).setValue(articulo)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("infoApp","ARTICULO GUARDADO EXITOSAMENTE");
-                            Toast.makeText(MainActivity3.this,"ARTICULO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            e.printStackTrace();
-                            Log.d("infoApp","NO C PUDO GUARDAR");
-                        }
-                    });
+                databaseReference.child("articulos/"+articulo.getPk()).setValue(articulo)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //Log.d("infoApp","ARTICULO GUARDADO EXITOSAMENTE");
+                                Toast.makeText(MainActivity3.this,"ARTICULO GUARDADO EXITOSAMENTE", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                                //Log.d("infoApp","NO C PUDO GUARDAR");
+                            }
+                        });
 
-            limpiarCajas();
+                limpiarCajas();
+            }
         }
     }
 
@@ -262,9 +270,9 @@ public class MainActivity3 extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d("infoApp", "Permisos concedidos");
+                //Log.d("infoApp", "Permisos concedidos");
             } else {
-                Log.d("infoApp", "Persmisos denegados");
+                //Log.d("infoApp", "Persmisos denegados");
             }
 
         }
@@ -285,29 +293,29 @@ public class MainActivity3 extends AppCompatActivity {
                     @Override
                     public void onSuccess(Location location) {
                         //if(location.getAltitude() || location)
-                        Log.d("infoApp", "ALt" + location.getAltitude());
-                        Log.d("infoApp", "Lat" + location.getLatitude());
+                        //Log.d("infoApp", "ALt" + location.getAltitude());
+                        //Log.d("infoApp", "Lat" + location.getLatitude());
                         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                         try {
                             List<Address> direccion = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            Log.d("infoApp", "la direccion es:" + direccion.get(0).getAddressLine(0));
+                            //Log.d("infoApp", "la direccion es:" + direccion.get(0).getAddressLine(0));
+
+                            dir=direccion.get(0).getAddressLine(0);
 
                             TextView textViewGps = findViewById(R.id.textViewGps);
                             textViewGps.setText(direccion.get(0).getAddressLine(0));
                             textViewGps.setVisibility(View.VISIBLE);
                             //deviceUser.setLatitud(location.getLatitude());
                             //deviceUser.setLongitud(location.getLongitude());
-
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
                 location.getLastLocation().addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("infoApp", "Fallo aquí GA");
+                        //Log.d("infoApp", "Fallo aquí GA");
                     }
                 });
             } else {
@@ -316,9 +324,5 @@ public class MainActivity3 extends AppCompatActivity {
         } else {
             Toast.makeText(MainActivity3.this, "Por favor active su GPS", Toast.LENGTH_SHORT).show(); //FORMATO DE UN TOAST QUE ES COMO UN POP UP
         }
-
-
     }
-
-
 }

@@ -33,7 +33,7 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
     @Override
     public void onBindViewHolder(ArticuloViewHolder holder, int position) {
         Articulo articulo = listaArticulos[position];
-        String data = " / AUTOR : " + articulo.getAutor() + " / TITUTLO : " + articulo.getTitulo() + " / FECHA : " + articulo.getFecha() + " / ";
+        String data = "    TEMA : " + articulo.getTitulo() + "\n    PROPUESTO POR EL USUARIO : " + articulo.getAutor() + "\n    DESDE : " + articulo.getDireccion() + "\n    FECHA : " + articulo.getFecha();
         holder.textView.setText(data);
 
         holder.verDetalle.setOnClickListener(new View.OnClickListener() {

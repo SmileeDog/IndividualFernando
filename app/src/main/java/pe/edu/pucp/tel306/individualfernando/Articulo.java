@@ -9,8 +9,17 @@ public class Articulo implements Serializable {
     private String fecha;
     private String autor;
     private String pk;
+    private String direccion;
+
 
     private ArrayList<Comentario> comentarioArrayList;
+    //----------------------------------------------------------------------------------------------
+    public String getDireccion() {
+        return direccion;
+    }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
     //----------------------------------------------------------------------------------------------
 
     public String getPk() { return pk; }

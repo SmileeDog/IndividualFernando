@@ -33,12 +33,14 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_detalle_del_articulo);
 
+        Log.d("infoApp","ESTAMOS EN LOS DETALLES DE DEBATE DE TODOS");
+
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
 
 
-        Log.d("infoApp","ESTAMOS EN VER DETALLES DE ARTICULO");
-        Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
+        //Log.d("infoApp","ESTAMOS EN VER DETALLES DE ARTICULO");
+        //Log.d("infoApp","ESTE ES EL ARTICULO Q ME LLEGA : "+ articulo.getPk());
 
 
         TextView textView = findViewById(R.id.textView8);
@@ -55,7 +57,7 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
                 if(snapshot.getValue() != null ){
                     Articulo articulo = snapshot.getValue(Articulo.class);
                     //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
-                    Log.d("infoApp","GAA");
+                    //Log.d("infoApp","GAA");
                     articuloArrayList.add(articulo);
                 }
             }
@@ -63,7 +65,7 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.getValue() != null ){
                     Articulo articulo = snapshot.getValue(Articulo.class);
-                    Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
+                    //Log.d("infoApp", "TITULO : " + articulo.getTitulo() + " | AUTOR : " + articulo.getAutor() + " | FECHA : " + articulo.getFecha());
                 }
             }
             @Override
@@ -83,14 +85,14 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(currentUser.getUid().equals("URwkRvBT7RhAvnexV8yctBOPHIj1")){
-            Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
-            Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
+            Intent intent = new Intent(VerDetalleDelArticuloActivity.this, ListaComentariosGestorActivity.class);
+            //Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
             intent.putExtra("arti", articulo);
             startActivity(intent);
             finish();
         }else{
             Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
-            Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
+            //Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
             intent.putExtra("arti", articulo);
             startActivity(intent);
             finish();
@@ -114,8 +116,4 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }

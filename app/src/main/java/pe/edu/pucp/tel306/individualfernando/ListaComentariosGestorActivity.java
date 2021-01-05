@@ -29,6 +29,8 @@ public class ListaComentariosGestorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_comentarios_gestor);
 
+        Log.d("infoApp","ESTAMOS EN LISTA COMENTARIOS DEL GESTOR");
+
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
 
