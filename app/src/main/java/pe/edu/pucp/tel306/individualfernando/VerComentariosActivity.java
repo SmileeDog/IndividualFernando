@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ public class VerComentariosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_comentarios);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Intent intent =  getIntent();
         articulo = (Articulo) intent.getSerializableExtra("arti");
@@ -69,31 +72,21 @@ public class VerComentariosActivity extends AppCompatActivity {
             }
         });
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
     }
 
-
     public void irAFormularioComentario(View view){
-        //startActivity(new Intent(VerComentariosActivity.this,FormularioComentarioActivity.class));
-        //finish();
-
         Intent intent = new Intent(VerComentariosActivity.this, FormularioComentarioActivity.class);
         Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A FORMULARIO COMENTARIO : "+ articulo.getPk());
         intent.putExtra("arti", articulo);
         startActivity(intent);
         finish();
-
     }
 
     public void irADetalleDebate(View view){
-
         Intent intent = new Intent(VerComentariosActivity.this, VerDetalleDelArticuloActivity.class);
         intent.putExtra("arti", artiEscuchado);
         startActivity(intent);
         finish();
-
     }
 
     public void refre(View view){
@@ -103,5 +96,14 @@ public class VerComentariosActivity extends AppCompatActivity {
         finish();
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==event.KEYCODE_BACK){
+            Intent intent = new Intent(VerComentariosActivity.this, VerComentariosActivity.class);
+            intent.putExtra("arti", artiEscuchado);
+            startActivity(intent);
+            //finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

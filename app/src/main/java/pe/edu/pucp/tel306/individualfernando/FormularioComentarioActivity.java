@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +19,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -57,6 +59,7 @@ public class FormularioComentarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_comentario);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Log.d("infoApp","ESTAMOS EN EL FORMULARIO DE COMENTARIO DEL COLABORADOR");
 
@@ -180,13 +183,10 @@ public class FormularioComentarioActivity extends AppCompatActivity {
                                 Log.d("infoApp", "NO C PUDO GUARDAR");
                             }
                         });
-
-                //
                 limpiarCajas();
                 //return true;
             }
             }
-
     }
     public void irAComentarios(View view){
         Intent intent = new Intent(FormularioComentarioActivity.this, VerComentariosActivity.class);
@@ -194,6 +194,18 @@ public class FormularioComentarioActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==event.KEYCODE_BACK){
+            Intent intent = new Intent(FormularioComentarioActivity.this, FormularioComentarioActivity.class);
+            intent.putExtra("arti", artiEscuchado);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     public void salir(View view){
         AuthUI instance = AuthUI.getInstance();
         instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {

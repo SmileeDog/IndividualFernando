@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -29,6 +30,7 @@ public class ColaboradorIndicacionesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colaborador_indicaciones);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -101,25 +103,8 @@ public class ColaboradorIndicacionesActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode==event.KEYCODE_BACK){
-
-            Log.d("infoApp","ME FUI GAAAA");
-            /*
-            AlertDialog.Builder builder = new AlertDialog.Builder(ColaboradorIndicacionesActivity.this);
-            builder.setMessage("EN SERIO DESEAS IRTE?")
-                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            chau();
-                        }
-                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //gaaaaaaa
-                    dialog.dismiss();
-                }
-            });
-            builder.show();*/
+            Intent intent = new Intent(ColaboradorIndicacionesActivity.this, ColaboradorIndicacionesActivity.class);
+            startActivity(intent);
         }
         return super.onKeyDown(keyCode, event);
     }

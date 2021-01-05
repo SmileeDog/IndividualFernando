@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ public class ListaComentariosGestorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_comentarios_gestor);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Log.d("infoApp","ESTAMOS EN LISTA COMENTARIOS DEL GESTOR");
 
@@ -64,10 +67,9 @@ public class ListaComentariosGestorActivity extends AppCompatActivity {
             }
         });
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     }
-    public void volverADetalleDebate(View view){
 
+    public void volverADetalleDebate(View view){
         Intent intent = new Intent(ListaComentariosGestorActivity.this, VerDetalleDelArticuloActivity.class);
         intent.putExtra("arti", artiEscuchado);
         startActivity(intent);
@@ -81,5 +83,14 @@ public class ListaComentariosGestorActivity extends AppCompatActivity {
         finish();
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==event.KEYCODE_BACK){
+            Intent intent = new Intent(ListaComentariosGestorActivity.this, ListaComentariosGestorActivity.class);
+            intent.putExtra("arti", artiEscuchado);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

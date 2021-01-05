@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -59,6 +60,7 @@ public class MainActivity3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Log.d("infoApp","ESTAMOS EN EL FORMULARIO DE DEBATE DEL GESTOR");
 
@@ -243,26 +245,8 @@ public class MainActivity3 extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode==event.KEYCODE_BACK){
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity3.this);
-            builder.setMessage("EN SERIO DESEAS IRTE?")
-                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            /*
-                            Intent intent = new Intent(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_HOME);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            */
-                            salir();
-                        }
-                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //gaaaaaaa
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
+            Intent intent = new Intent(MainActivity3.this, MainActivity3.class);
+            startActivity(intent);
         }
         return super.onKeyDown(keyCode, event);
     }

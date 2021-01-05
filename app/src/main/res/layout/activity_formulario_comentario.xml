@@ -82,6 +82,7 @@
         android:id="@+id/button22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="mostrarInfoDeUbicacion"
         android:text="Obtener Ubicacion"
         app:layout_constraintBottom_toBottomOf="@+id/button12"
         app:layout_constraintEnd_toStartOf="@+id/button12"
