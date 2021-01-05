@@ -126,7 +126,6 @@ public class MainActivity3 extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     public void salir(){
@@ -138,7 +137,6 @@ public class MainActivity3 extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void limpiarCajas() {

@@ -206,6 +206,13 @@ public class FormularioComentarioActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    public void refresss(View view){
+        Intent intent = new Intent(FormularioComentarioActivity.this, FormularioComentarioActivity.class);
+        intent.putExtra("arti", artiEscuchado);
+        startActivity(intent);
+        finish();
+    }
+
     public void salir(View view){
         AuthUI instance = AuthUI.getInstance();
         instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {

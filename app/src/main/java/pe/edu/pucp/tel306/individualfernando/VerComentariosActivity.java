@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -105,5 +107,16 @@ public class VerComentariosActivity extends AppCompatActivity {
             //finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void logout(View view){
+        AuthUI instance = AuthUI.getInstance();
+        instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                startActivity(new Intent(VerComentariosActivity.this,MainActivity.class));
+                finish();
+            }
+        });
     }
 }

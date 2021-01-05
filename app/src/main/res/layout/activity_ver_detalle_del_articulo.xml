@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".VerDetalleDelArticuloActivity">
 
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="fuera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off" />
+
     <ScrollView
         android:layout_width="349dp"
         android:layout_height="358dp"
@@ -69,7 +80,7 @@
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="92dp"
         android:onClick="volverAListaDebates"
         android:text="Volver"
         app:layout_constraintBottom_toBottomOf="@+id/button18"
@@ -82,9 +93,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:layout_marginEnd="70dp"
-        android:onClick="fuera"
-        android:text="salir"
+        android:layout_marginEnd="92dp"
+        android:onClick="refresc"
+        android:text="Refrescar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
