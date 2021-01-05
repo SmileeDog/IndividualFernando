@@ -183,7 +183,6 @@ public class FormularioComentarioActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
 

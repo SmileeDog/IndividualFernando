@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IndividualFernando">
-        <activity android:name=".VerComentariosActivity"></activity>
+        <activity android:name=".ListaComentariosGestorActivity"></activity>
+        <activity android:name=".VerComentariosActivity" />
         <activity android:name=".FormularioComentarioActivity" />
         <activity android:name=".ColaboradorIndicacionesActivity" />
         <activity android:name=".VerDetalleDelArticuloActivity" />

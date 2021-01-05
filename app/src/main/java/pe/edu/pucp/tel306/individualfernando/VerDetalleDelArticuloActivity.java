@@ -10,6 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,11 +80,21 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
 
     }
     public void verComentarios(View view){
-        Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
-        Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
-        intent.putExtra("arti", articulo);
-        startActivity(intent);
-        finish();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(currentUser.getUid().equals("URwkRvBT7RhAvnexV8yctBOPHIj1")){
+            Intent intent = new Intent(VerDetalleDelArticuloActivity.this, ListaComentariosGestorActivity.class);
+            Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
+            intent.putExtra("arti", articulo);
+            startActivity(intent);
+            finish();
+        }else{
+            Intent intent = new Intent(VerDetalleDelArticuloActivity.this, VerComentariosActivity.class);
+            Log.d("infoApp","ESTE ES EL ARTICULO Q MANDO A LISTA COMENTARIOS : "+ articulo.getPk());
+            intent.putExtra("arti", articulo);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void volverAListaDebates(View view){
@@ -89,6 +103,19 @@ public class VerDetalleDelArticuloActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void fuera(View view){
+        AuthUI instance = AuthUI.getInstance();
+        instance.signOut(this).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                startActivity(new Intent(VerDetalleDelArticuloActivity.this,MainActivity.class));
+                finish();
+            }
+        });
+    }
+
+
 
 
 }
